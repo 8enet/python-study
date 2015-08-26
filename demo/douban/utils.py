@@ -13,15 +13,16 @@ def get_domain(url):
 
 
 def http_request(url):
-    print('http_request  ', url)
+    print('http_request  --> ', url)
     conn = http.client.HTTPConnection(get_domain(url))
     conn.request("GET", url, headers=config.HTTP_HEADERS)
     resp = conn.getresponse().read().decode("utf-8")
-    return Resp(resp)
+    return resp
 
-class Resp:
-    def __init__(self, resp):
-        self.resp = resp
+def is_empty(text):
+    return text is None or len(text) == 0
 
-    def __call__(self, *args, **kwargs):
-        return self.resp
+def match_people_url(url):
+    if is_empty(url):
+        return False
+    return str(url).find('http://www.douban.com/group/people/') != -1
