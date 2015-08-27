@@ -1,7 +1,7 @@
 __author__ = 'zl'
 
 BASE_URL = "http://www.douban.com/group/shanghaizufang/discussion?start="
-MAX_PAGE = 3     # 最大页数
+MAX_PAGE = 5     # 最大页数
 PAGE_SIZE = 25   # 每页条数
 MAX_THREAD = 5   # 最多线程数
 SAVE_PATH = ""

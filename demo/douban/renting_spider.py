@@ -3,7 +3,7 @@ __author__ = 'zl'
 import concurrent.futures
 import re
 
-from douban import config, utils, core
+from demo.douban import config, utils, core
 
 """
 房子不好找啊，定时抓取豆瓣上发布的合租或租房信息，过滤相关的条件，一旦有匹配的新贴子就发通知
@@ -12,9 +12,7 @@ update 2015/08/26 23:05
 """
 
 def main():
-    urls = []
-    for page in range(0, config.MAX_PAGE*config.PAGE_SIZE, config.PAGE_SIZE):
-        urls.append(config.BASE_URL + str(page))
+    urls = [config.BASE_URL + str(p*config.PAGE_SIZE) for p in range(config.MAX_PAGE)]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=config.MAX_THREAD) as executor:
         futures_http = {
@@ -70,17 +68,18 @@ def spider_completed(datas):
     """
     if utils.is_empty(datas):
         pass
-    rgx=_get_rgx()
+    rgx = _get_rgx()
     for post in datas:
         if rgx.search(post.to_string()) is not None:
             print(post.to_string())
     pass
 
 def _get_rgx():
-    reg=''
+    reg = ''
     for k in config.POSTS_KEY_WORD:
         reg += '('+k+')|'
     return re.compile(r''+reg[:-1]+'', re.L)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 __author__ = 'zl'
 from html.parser import HTMLParser
-from douban import utils
+from demo.douban import utils
 
 class PostsInfo():
     title = ''
