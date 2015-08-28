@@ -1,7 +1,9 @@
 __author__ = 'zl'
 
-BASE_URL = "http://www.douban.com/group/shanghaizufang/discussion?start="
-MAX_PAGE = 5     # 最大页数
+BASE_URL = "http://www.douban.com/group/{groupName}/discussion?start={startIndex}"
+PEOPLE_ZONE_URL = 'http://www.douban.com/group/people/'
+GROUPS = ['shanghaizufang', 'homeatshanghai']  # 小组名称
+MAX_PAGE = 10     # 最大页数
 PAGE_SIZE = 25   # 每页条数
 MAX_THREAD = 5   # 最多线程数
 SAVE_PATH = ""

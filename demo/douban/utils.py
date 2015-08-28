@@ -26,4 +26,4 @@ def is_empty(text):
 def match_people_url(url):
     if is_empty(url):
         return False
-    return str(url).find('http://www.douban.com/group/people/') != -1
+    return str(url).find(config.PEOPLE_ZONE_URL) != -1
