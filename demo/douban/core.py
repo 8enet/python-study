@@ -2,11 +2,12 @@ __author__ = 'zl'
 from html.parser import HTMLParser
 from demo.douban import utils
 
-class PostsInfo():
-    title = ''
-    topic_url = ''
-    author = ''
-    last_time = ''
+class PostsInfo:
+    def __init__(self):
+        self.title = ''
+        self.topic_url = ''
+        self.author = ''
+        self.last_time = ''
 
     def to_string(self):
         return 'title:'+self.title+'\tauthor:'+self.author+'\ttime:'+self.last_time+'\turl:'+self.topic_url
