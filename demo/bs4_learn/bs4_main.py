@@ -3,10 +3,10 @@ from demo.standard_lib import utils
 """
 Beautiful Soup 4 示例
 """
-
+url = "http://www.cnbeta.com"
 def main():
-    resp = utils.http_request("http://www.cnbeta.com")
-    soup = BeautifulSoup(resp, "html.parser")
+    resp = utils.http_request(url)
+    soup = BeautifulSoup(resp, "lxml")
     get_all_cus_text(soup)
 
 def get_all_cus_text(soup):
@@ -18,7 +18,7 @@ def get_all_cus_text(soup):
     # soup.find() 只会返回第一个匹配的节点
     tag = soup.find_all('div', {'class', 'title'})
     for child in tag:
-        print(child.a.text, child.a['href'])
+        print(child.a.text, url+child.a['href'])
 
 
 if __name__ == '__main__':
