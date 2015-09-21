@@ -79,12 +79,24 @@ def is_palindrome(num):
         if x <= y:
             return True
 
+def read_pwd():
+    def sp_data(line):
+        name, pwd, id, reset = line.split(':', 3)
+        return {'name': name, 'id': id}
+    with open('/etc/passwd') as f:
+        ls = [sp_data(line)
+              for line in f
+              if not line.startswith('#')]
+    print(id(ls))
+    print(ls)
+    pass
 
 def main():
     f_map1()
     f_reduce1()
     f_sorted1()
     f_filter1()
+    read_pwd()
 
 
 if __name__ == '__main__':
