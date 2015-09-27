@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import concurrent.futures.thread
 from datetime import datetime
+from functools import wraps
+import time
+import json
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
@@ -10,12 +13,14 @@ HEADERS = {
     'Accept-Encoding': 'gzip, deflate, sdch', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Cache-Control': 'max-age=0',
     'Connection': 'keep-alive'}
 
+
 class ProxyInfo:
     def __init__(self, ip, port, type, desc):
         self.ip = ip
         self.port = port
         self.type = type
         self.desc = desc
+        self.time = None
 
     def get_url(self):
         return '%s://%s:%s' % (str.lower(self.type), self.ip, self.port)
@@ -27,17 +32,34 @@ class ProxyInfo:
         return str.lower(self.type) == 'https'
 
     def __repr__(self):
-        return 'ip:%s:%s  type:%s  %s' % (self.ip, self.port, self.type, self.desc)
+        return 'ip:%s:%s  type:%s  %s, time %s' % (self.ip, self.port, self.type, self.desc, self.time)
 
+
+def use_req_time(func):
+    @wraps(func)
+    def wrap_req(proxyinfo):
+        t0 = time.time()
+        result = func(proxyinfo)
+        t1 = time.time()
+        proxyinfo.time = t1-t0
+        return result
+    return wrap_req
+
+
+@use_req_time
 def check_proxy(proxyinfo):
     try:
         r = requests.get('http://ip.taobao.com/service/getIpInfo2.php?ip=myip', headers=HEADERS, timeout=30,
                          proxies={str.lower(proxyinfo.type): proxyinfo.get_url()})
         if r.status_code == 200:
-            return proxyinfo
+            try:
+                r.encoding = 'utf-8'
+                json.loads(r.text)
+                return proxyinfo
+            except Exception:
+                pass
     except Exception:
         pass
-
 
 def _request_page(url, proxies=None):
     r = requests.get(url, headers=HEADERS, proxies=proxies)

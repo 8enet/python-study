@@ -8,4 +8,17 @@
 `python3`   
 `from bs4 import BeautifulSoup`   
 如果没错误就安装成功了。   
-同样的，安装速度快的lxml解析库https://pypi.python.org/pypi/lxml/3.4.4
+同样的，安装速度快的lxml解析库https://pypi.python.org/pypi/lxml/3.4.4   
+如果出现
+
+>fatal error: 'libxml/xmlversion.h' file not found  
+\#include "libxml/xmlversion.h" 
+ 1 error generated.
+error: command 'clang' failed with exit status 1 
+  
+```
+brew install libxml2
+brew link libxml2 --force
+export C_INCLUDE_PATH=/usr/local/Cellar/libxml2/2.9.2/include/libxml2:$C_INCLUDE_PATH
+```
+然后再次安装`python setup.py install `

@@ -1,7 +1,7 @@
 __author__ = 'zl'
 
 
-from net_spider.proxy_provider import WWW_xicidaili_com
+from proxy_provider import WWW_xicidaili_com
 
 
 def main2():
