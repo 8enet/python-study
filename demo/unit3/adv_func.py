@@ -79,6 +79,10 @@ def is_palindrome(num):
         if x <= y:
             return True
 
+
+def is_palindrome2(num):
+    return num == int(str(num)[::-1])  # 反转数字，效率比较高
+
 def read_pwd():
     def sp_data(line):
         name, pwd, id, reset = line.split(':', 3)
