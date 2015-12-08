@@ -72,22 +72,35 @@ class WWW_xicidaili_com(ProxyPage):
             return ProxyInfo(tds[2].text, tds[3].text, tds[6].text, tds[4].text)
         with concurrent.futures.thread.ThreadPoolExecutor(max_workers=50) as executor:
             futures = [executor.submit(_request_page, url, proxies) for url in self.urls]
-            res = []
+            futures2 = None
             for ft in concurrent.futures.as_completed(futures):
                 try:
                     curr_res = ft.result()
                     soup = BeautifulSoup(curr_res, "lxml")
                     tag = soup.find(id='ip_list').find_all('tr')
-                    res.extend([parse(next) for next in tag
-                                if next.find('img') is not None])
+                    # res.extend([parse(next) for next in tag
+                    #             if next.find('img') is not None])
+                    futures2 = [executor.submit(check_proxy, info) for info in
+                                filter(lambda pinfo: pinfo.is_http(), [parse(next) for next in tag
+                                                                       if next.find('img') is not None])]
                 except Exception as e:
                     pass
             print('start check proxy ...')
-            futures = [executor.submit(check_proxy, info) for info in filter(lambda pinfo: pinfo.is_http(), res)]
-            print('check proxy size %s ' % (len(futures)))
+            # futures = [executor.submit(check_proxy, info) for info in filter(lambda pinfo: pinfo.is_http(), res)]
+            print('check proxy size %s ' % (len(futures2)))
             st = datetime.now()
-            res = [ft.result() for ft in concurrent.futures.as_completed(futures) if ft.result() is not None]
+            res = [ft.result() for ft in concurrent.futures.as_completed(futures2) if ft.result() is not None]
             print('check proxy over ,success proxy size %s , free time %s ' % (len(res), datetime.now()-st))
             return res
 
         pass
+
+
+def main():
+    res = WWW_xicidaili_com().get_proxys(1, 2)
+    print(res)
+    pass
+
+
+if __name__ == '__main__':
+    main()
