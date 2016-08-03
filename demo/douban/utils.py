@@ -2,6 +2,7 @@ __author__ = 'zl'
 import urllib.parse
 import http.client
 import threading
+import gzip
 
 from demo.douban import config
 
@@ -15,10 +16,15 @@ def get_domain(url):
 
 def http_request(url):
     print('http_request  --> ', url, threading.current_thread().getName())
-    conn = http.client.HTTPConnection(get_domain(url))
+    conn = http.client.HTTPSConnection(get_domain(url))
     conn.request("GET", url, headers=config.HTTP_HEADERS)
-    resp = conn.getresponse().read().decode("utf-8")
-    return resp
+    http_response = conn.getresponse()
+    if http_response.getheader("Content-Encoding") == "gzip":
+        resp = str(gzip.decompress(http_response.read()), "utf-8")
+        return resp
+
+    return http_response.read().decode("utf-8")
+
 
 def is_empty(text):
     return text is None or len(text) == 0
