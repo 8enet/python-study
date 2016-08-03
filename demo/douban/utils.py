@@ -19,11 +19,11 @@ def http_request(url):
     conn = http.client.HTTPSConnection(get_domain(url))
     conn.request("GET", url, headers=config.HTTP_HEADERS)
     http_response = conn.getresponse()
+    resp_data = http_response.read()
     if http_response.getheader("Content-Encoding") == "gzip":
-        resp = str(gzip.decompress(http_response.read()), "utf-8")
-        return resp
-
-    return http_response.read().decode("utf-8")
+        return str(gzip.decompress(resp_data), "utf-8")
+    else:
+        return resp_data.decode("utf-8")
 
 
 def is_empty(text):

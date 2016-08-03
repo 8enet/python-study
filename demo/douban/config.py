@@ -3,7 +3,7 @@ __author__ = 'zl'
 BASE_URL = "https://www.douban.com/group/{groupName}/discussion?start={startIndex}"
 PEOPLE_ZONE_URL = 'http://www.douban.com/group/people/'
 GROUPS = ['383972', '146409']  # 小组名称
-MAX_PAGE = 7     # 最大页数
+MAX_PAGE = 10     # 最大页数
 PAGE_SIZE = 25   # 每页条数
 MAX_THREAD = 10   # 最多线程数
 SAVE_PATH = ""
