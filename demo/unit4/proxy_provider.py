@@ -5,7 +5,7 @@ from datetime import datetime
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36',
-    'Host': 'www.xicidaili.com', 'DNT': '1',
+    'DNT': '1',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, sdch', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Cache-Control': 'max-age=0',
     'Connection': 'keep-alive'}

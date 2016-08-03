@@ -13,7 +13,8 @@ HEADERS = {
     ':authority': 'translate.googleapis.com',
     ':method': 'GET',
     ':scheme': 'https',
-    }
+}
+
 
 def main():
     q = 'A wrapper library to simplify basic integrations with Google Play Services. The library wraps the following APIs (for now):'
@@ -26,15 +27,17 @@ def main():
     google_translate(q)
     pass
 
+
 def google_translate(q):
     q = urllib.parse.quote(q)
     path = '/translate_a/single?client=gtx&sl=auto&tl=zh-CN&hl=zh-CN&dt=t&dt=bd&dj=1&source=icon&tk=508745|535120&q=%s' % q
     HEADERS[':path'] = path
-    r = requests.get('https://translate.googleapis.com'+path, HEADERS)
+    r = requests.get('https://translate.googleapis.com' + path, HEADERS)
     data = json.loads(r.text)
     print(data)
     for item in data['sentences']:
         print(item['trans'])
+
 
 if __name__ == '__main__':
     main()
