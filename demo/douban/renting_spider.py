@@ -10,13 +10,13 @@ from demo.douban import config, utils, core
 房子不好找啊，定时抓取豆瓣上发布的合租或租房信息，过滤相关的条件，一旦有匹配的新贴子就发通知
 目前完成度 多线程抓取贴子并解析数据,数据过滤,多个小组
 然并卵啊，并没有合适的房源 (T＿T)
-update 2016/08/03 14:27
+update 2017/04/12 19:39
 """
 
 def main():
     urls = [config.BASE_URL.format(groupName=grp, startIndex=p*config.PAGE_SIZE)
             for grp in config.GROUPS
-            for p in range(config.MAX_PAGE)
+            for p in range(config.START_PAGE,config.START_PAGE+config.MAX_PAGE)
             ]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=config.MAX_THREAD) as executor:
@@ -83,7 +83,7 @@ def _get_rgx():
     reg = ''
     for k in config.POSTS_KEY_WORD:
         reg += '('+k+')|'
-    return re.compile(r''+reg[:-1]+'', re.L)
+    return re.compile(r''+reg[:-1]+'')
 
 
 if __name__ == "__main__":

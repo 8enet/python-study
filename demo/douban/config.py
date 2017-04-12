@@ -2,10 +2,11 @@ __author__ = 'zl'
 
 BASE_URL = "https://www.douban.com/group/{groupName}/discussion?start={startIndex}"
 PEOPLE_ZONE_URL = 'http://www.douban.com/group/people/'
-GROUPS = ['383972', '146409']  # 小组名称
-MAX_PAGE = 10     # 最大页数
-PAGE_SIZE = 25   # 每页条数
+GROUPS = ['shanghaizufang']  # 小组名称
+MAX_PAGE = 30     # 每次抓取的最大页数
+PAGE_SIZE = 50   # 每页条数
 MAX_THREAD = 10   # 最多线程数
+START_PAGE = 0  # 开始抓取的页数,0开始
 SAVE_PATH = ""
 HTTP_HEADERS = {
     "Host": "www.douban.com",
@@ -17,5 +18,6 @@ HTTP_HEADERS = {
     "Connection": "keep-alive",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36"
 }
-POSTS_KEY_WORD = ("大渡河路","金沙江路","长风公园","华师大","环球港")
+#POSTS_KEY_WORD = ("2号线","娄山关路","茅台路","威宁路","北新泾")
+POSTS_KEY_WORD = ("娄山关路","北新泾")
 #identity

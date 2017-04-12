@@ -15,7 +15,7 @@ def get_domain(url):
 
 
 def http_request(url):
-    print('http_request  --> ', url, threading.current_thread().getName())
+    print('http_request  --> ', url)
     conn = http.client.HTTPSConnection(get_domain(url))
     conn.request("GET", url, headers=config.HTTP_HEADERS)
     http_response = conn.getresponse()
